@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package models;
 
 /**
@@ -10,18 +5,20 @@ package models;
  * @author hoangnn
  */
 public class Hotel {
-    private String hotelId; 
+
+    private String hotelId;
     private String hotelName;
     private int numRoomsAvailable;
     private String hotelAddress;
     private String hotelPhone;
     private int hotelRating;
 
-    //constructor
+    // constructor
     public Hotel() {
     }
-    
-    public Hotel(String hotelId, String hotelName, int numRoomsAvailable, String hotelAddress, String hotelPhone, int hotelRating) {
+
+    public Hotel(String hotelId, String hotelName, int numRoomsAvailable, String hotelAddress,
+            String hotelPhone, int hotelRating) {
         this.hotelId = hotelId;
         this.hotelName = hotelName;
         this.numRoomsAvailable = numRoomsAvailable;
@@ -30,7 +27,7 @@ public class Hotel {
         this.hotelRating = hotelRating;
     }
 
-    //getter
+    // getter
     public String getHotelId() {
         return hotelId;
     }
@@ -55,25 +52,45 @@ public class Hotel {
         return hotelRating;
     }
 
-    //setter
-    public void setHotelName(String hotelName) {
+    // setter - cố tình để default để chỉ mỗi package models sử dụng đc
+    void setHotelName(String hotelName) {
         this.hotelName = hotelName;
     }
 
-    public void setNumRoomsAvailable(int numRoomsAvailable) {
+    void setNumRoomsAvailable(int numRoomsAvailable) {
         this.numRoomsAvailable = numRoomsAvailable;
     }
 
-    public void setHotelAddress(String hotelAddress) {
+    void setHotelAddress(String hotelAddress) {
         this.hotelAddress = hotelAddress;
     }
 
-    public void setHotelPhone(String hotelPhone) {
+    void setHotelPhone(String hotelPhone) {
         this.hotelPhone = hotelPhone;
     }
 
-    public void setHotelRating(int hotelRating) {
+    void setHotelRating(int hotelRating) {
         this.hotelRating = hotelRating;
     }
 
+    @Override
+    public boolean equals(Object that) {
+        //check null
+        if (that == null) {
+            return false;
+        }
+        //check class
+        if (that.getClass() != this.getClass()) {
+            return false;
+        }
+
+        //compare by hotelId
+        return this.getHotelId().equals(((Hotel) that).getHotelId());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%4s|%10s|%3d|%70s|%10s|%1d star\n", hotelId, hotelName, numRoomsAvailable, hotelAddress, hotelPhone, hotelRating);
+
+    }
 }
