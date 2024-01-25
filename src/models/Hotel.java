@@ -1,7 +1,6 @@
 package models;
 
 /**
- *
  * @author hoangnn
  */
 public class Hotel {
@@ -14,11 +13,9 @@ public class Hotel {
     private int hotelRating;
 
     // constructor
-    public Hotel() {
-    }
+    public Hotel() {}
 
-    public Hotel(String hotelId, String hotelName, int numRoomsAvailable, String hotelAddress,
-            String hotelPhone, int hotelRating) {
+    public Hotel(String hotelId, String hotelName, int numRoomsAvailable, String hotelAddress, String hotelPhone, int hotelRating) {
         this.hotelId = hotelId;
         this.hotelName = hotelName;
         this.numRoomsAvailable = numRoomsAvailable;
@@ -73,24 +70,24 @@ public class Hotel {
         this.hotelRating = hotelRating;
     }
 
+    // so sánh 2 Hotel có khác nhau không dựa vào hotelId
     @Override
     public boolean equals(Object that) {
-        //check null
+        // check null
         if (that == null) {
             return false;
         }
-        //check class
+        // check class
         if (that.getClass() != this.getClass()) {
             return false;
         }
 
-        //compare by hotelId
+        // compare by hotelId
         return this.getHotelId().equals(((Hotel) that).getHotelId());
     }
 
     @Override
     public String toString() {
         return String.format("%4s|%10s|%3d|%70s|%10s|%1d star\n", hotelId, hotelName, numRoomsAvailable, hotelAddress, hotelPhone, hotelRating);
-
     }
 }

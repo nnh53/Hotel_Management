@@ -5,13 +5,12 @@ import views.AbstractMenu;
 import views.HotelListView;
 
 /**
- *
  * @author hoangnn
  */
 public class HotelManagementMenu extends AbstractMenu {
 
     public HotelManagementMenu() {
-        super("Hotel Management");
+        super("Hotel Management Menu");
         this.addNewOption("Add Hotel");
         this.addNewOption("Check Hotel Existed");
         this.addNewOption("Update Hotel");
@@ -22,8 +21,8 @@ public class HotelManagementMenu extends AbstractMenu {
     }
 
     @Override
-    public boolean eventHandler(int choise, Controller controller) {
-        switch (choise) {
+    public boolean eventHandler(int choice, Controller controller) {
+        switch (choice) {
             case 1: {
                 controller.addHotel();
                 return true;
@@ -59,17 +58,17 @@ public class HotelManagementMenu extends AbstractMenu {
     }
 
     public static void main(String[] args) {
-        String urlDatabase = "F:\\FPT\\Ki 3\\LAB211\\Hotel_Management-hoangnnSE183190\\database\\Hotel.dat";
-        //=========INITIALIZE=========
-        //view
+        final String urlDatabase = "F:\\FPT\\Ki 3\\LAB211\\Hotel_Management-hoangnnSE183190\\database\\Hotel.dat";
+        // =========INITIALIZE=========
+        // view
         HotelListView hotelListView = new HotelListView();
 
-        //controller
-        Controller controller = new Controller(hotelListView); //về sau có thể còn view khác nữa
+        // controller
+        Controller controller = new Controller(hotelListView); // về sau có thể còn view khác nữa
 
-        //model
+        // model
         controller.connectDB(urlDatabase);
-        //=========USE=========
+        // =========USE=========
         HotelManagementMenu application = new HotelManagementMenu();
         application.trigger(controller);
     }

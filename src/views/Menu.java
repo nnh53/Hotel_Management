@@ -1,25 +1,25 @@
 package views;
 
 import java.util.ArrayList;
-import ultils.Inputter;
+import utils.Inputter;
 
 public class Menu {
 
-    //====================PROP====================
-    public ArrayList<String> optionList = new ArrayList<>(); //mảng lưu các chuỗi lựa chọn
+    // ====================PROP====================
+    public ArrayList<String> optionList = new ArrayList<>(); // mảng lưu các chuỗi lựa chọn
     public String title;
 
-    //====================CONSTRUCTOR====================
+    // ====================CONSTRUCTOR====================
     public Menu(String title) {
         this.title = title;
     }
 
-    //====================METHOD====================
+    // ====================METHOD====================
     public void addNewOption(String newOption) {
         optionList.add(newOption);
     }
 
-    //print: in danh sách menu(các option)
+    // print: in danh sách menu(các option)
     public void printAllOption() {
         int count = 1;
         String msg = "";
@@ -30,10 +30,9 @@ public class Menu {
         printNotification(msg, title);
     }
 
-    public int getChoise() {
-        int choise = Inputter.getInteger("Input Your Choise", "Your choise must between 1 and "
-                + optionList.size(), 1, optionList.size());
-        return choise;
+    public int getChoice() {
+        int choice = Inputter.getInteger("Input Your Choise", "Your choise must between 1 and " + optionList.size(), 1, optionList.size());
+        return choice;
     }
 
     public static void printNotification(String msg) {

@@ -4,27 +4,25 @@ import controllers.Controller;
 
 public abstract class AbstractMenu extends Menu {
 
-    //====================CONSTRUCTOR====================
+    // ====================CONSTRUCTOR====================
     public AbstractMenu(String title) {
         super(title);
     }
 
-    //====================METHOD====================
+    // ====================METHOD====================
     /*
-    Mỗi một Menu sẽ có switch case khác nhau, nhận vào controller để từ controller gọi xuống
+     * Mỗi một Menu sẽ có switch case khác nhau, nhận vào controller để từ controller gọi xuống
      */
-    //true thì còn tiếp tục, false là ngừng
-    public abstract boolean eventHandler(int choise, Controller controller);
+    // true thì còn tiếp tục, false là ngừng
+    public abstract boolean eventHandler(int choice, Controller controller);
 
-    /*
-        Tạo vòng lặp để chạy hàm eventHandler
-     */
+    // Tạo một môi trường vòng lặp để
     public void trigger(Controller controller) {
         boolean continues;
         do {
             this.printAllOption();
-            int userChoise = this.getChoise();
-            continues = eventHandler(userChoise, controller);
+            int userChoice = this.getChoice();
+            continues = eventHandler(userChoice, controller);
         } while (continues);
     }
 

@@ -9,14 +9,11 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import ultils.IDatabaseMagement;
 
 /**
- *
  * @author hoangnn
- *
  */
-public class HotelList extends ArrayList<Hotel> implements IDatabaseMagement {
+public class HotelList extends ArrayList<Hotel> implements IDatabaseManagement {
 
     // ====================PROP====================
     private String databaseURL = "";
@@ -32,6 +29,7 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseMagement {
     public void createNewFile() {
         try {
             PrintWriter pw = new PrintWriter(this.databaseURL);
+            pw.close(); // (để dọn rác)
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,10 +49,11 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseMagement {
                 writer.write("\n");
             }
             writer.flush();
+            writer.close(); // (để dọn rác)
             return true;
         } catch (Exception e) {
             System.out.println("Save File Error");
-            //e.printStackTrace();
+            // e.printStackTrace();
             return false;
         }
     }
@@ -80,8 +79,7 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseMagement {
                 String hotelPhone = st.nextToken().trim();
                 int hotelRating = Integer.parseInt(st.nextToken().substring(0, 1));
                 // tạo
-                Hotel newHotel = new Hotel(hotelId, hotelName, numRoomsAvailable, hotelAddress,
-                        hotelPhone, hotelRating);
+                Hotel newHotel = new Hotel(hotelId, hotelName, numRoomsAvailable, hotelAddress, hotelPhone, hotelRating);
                 this.add(newHotel);
                 line = reader.readLine();
             }
@@ -93,7 +91,7 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseMagement {
 
         } catch (Exception e) {
             System.out.println("Parse Data Error" + e);
-            //e.printStackTrace();
+            // e.printStackTrace();
             return false;
         }
     }
@@ -104,11 +102,27 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseMagement {
         for (Hotel item : this) { // item là 1 hotel trong list
             if (item.getHotelId().equals(targetId)) {
                 isExisted = true;
+                break;
             }
-            break;
         }
         if (isExisted) {
-            System.out.println("This Id is alrealdy Existed");
+            System.out.println("This Id is already Existed");
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean isExistedByAddress(String targetAddress) {
+        boolean isExisted = false;
+        for (Hotel item : this) { // item là 1 hotel trong list
+            if (item.getHotelAddress().equals(targetAddress)) {
+                isExisted = true;
+                break;
+            }
+        }
+        if (isExisted) {
+            System.out.println("This Address is already Existed");
             return true;
         }
 
@@ -129,8 +143,6 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseMagement {
 
         for (Hotel item : this) {
             if (item.getHotelName().toLowerCase().contains(targetName)) {
-                //
-                int test;
                 tmpList.add(item);
             }
         }

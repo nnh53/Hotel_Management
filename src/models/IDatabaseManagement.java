@@ -1,10 +1,9 @@
-package ultils;
+package models;
 
 /**
- *
  * @author hoangnn
  */
-public interface IDatabaseMagement {
+public interface IDatabaseManagement {
 
     public boolean saveToFile();
 

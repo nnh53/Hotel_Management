@@ -1,30 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
 import java.util.ArrayList;
 import models.Hotel;
 import models.HotelList;
-import ultils.Inputter;
+import utils.Inputter;
 import views.HotelListView;
 import views.Menu;
 
 /**
- *
  * @author hoangnn
  */
 public class Controller {
-    //====================PROP====================
+    // ====================PROP====================
 
     private HotelListView view;
     private HotelList hotelList;
 
-    //====================CONSTRUCTOR====================
-    public Controller() {
-    }
+    // ====================CONSTRUCTOR====================
+    public Controller() {}
 
     public Controller(HotelListView view, HotelList hotelList) {
         this.view = view;
@@ -35,40 +28,70 @@ public class Controller {
         this.view = view;
     }
 
-    //====================METHOD====================
+    // ====================METHOD====================
     public void addHotel() {
         try {
-            int choise;
+            int choice;
             do {
-                Hotel inputtedObj = this.view.getNewHotelInfomation(this.hotelList); //VIEW đưa CONTROLLER data
-
-                this.hotelList.add(inputtedObj); //CONTROLLER đập xuống MODEL
+                // VIEW đưa CONTROLLER data
+                Hotel inputtedObj = this.view.getNewHotelInformation(this.hotelList);
+                // CONTROLLER đập xuống MODEL
+                this.hotelList.add(inputtedObj);
 
                 Menu.printNotification("Add Success");
-                choise = Inputter.getYesNo("Do you want to continue (Yes/No)", "This is Required");
-            } while (choise != 0);
-            this.hotelList.saveToFile(); //SAVE xuống file
-
+                choice = Inputter.getYesNo("Do you want to continue (Yes/No)", "This is Required");
+            } while (choice != 0);
+            this.hotelList.saveToFile(); // SAVE xuống file
             Menu.printNotification("Save to File Success");
 
         } catch (Exception e) {
             Menu.printNotification("Save to File Failed");
-            //e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
     public void updateHotel() {
+        try {
+            int choice;
+            do {
+                // nhập hotelId cần update //VIEW đưa CONTROLLER data
+                String targetId = Inputter.getString("Input hotelId", "That field is required", HotelListView.HOTEL_ID_REGEX);
+                // CONTROLLER xuống MODEL kiểm tra
+                Hotel result = this.hotelList.getHotelById(targetId);
+
+                // 1. nếu tìm thấy hotel
+                if (result != null) {
+                    String msg = "Found! \n".concat(result.toString());
+                    Menu.printNotification(msg);
+                    Hotel newHotel = this.view.getUpdateHotelInformation(result);
+                    this.hotelList.remove(result);
+                    this.hotelList.add(newHotel);
+                    Menu.printNotification("Update Success");
+
+                    this.hotelList.saveToFile(); // SAVE xuống file
+                    Menu.printNotification("Save to File Success");
+                } else {
+                    // 2.
+                    Menu.printNotification("No Hotel Found!");
+                }
+                choice = Inputter.getYesNo("Do you want to continue (Yes/No)", "This is required");
+            } while (choice != 0);
+        } catch (Exception e) {
+            Menu.printNotification("Save to File Failed");
+            // e.printStackTrace();
+        }
 
     }
 
     public void searchHotel() {
-        int choise;
+        int choice;
         do {
-            String inputtedString = this.view.getSearchHotelInfomation(); //VIEW đưa CONTROLLER data
+            String inputtedString = this.view.getSearchHotelInfomation(); // VIEW đưa CONTROLLER
+                                                                          // data
 
             ArrayList<Hotel> result = new ArrayList<>();
             if (inputtedString.matches(HotelListView.HOTEL_ID_REGEX)) {
-                Hotel tmp = hotelList.getHotelById(inputtedString); //hotel tạm check null
+                Hotel tmp = hotelList.getHotelById(inputtedString); // hotel tạm check null
                 if (tmp != null) {
                     result.add(tmp);
                 }
@@ -86,28 +109,8 @@ public class Controller {
                 msg = "No Hotel Found!";
             }
             Menu.printNotification(msg);
-            choise = Inputter.getYesNo("Do you want to continue (Yes/No)", "This is required");
-        } while (choise != 0);
-    }
-
-    public void checkHotelExisted() {
-        int choise;
-        do {
-            String targetId = Inputter.getString("Input hotelId", "That field is required", HotelListView.HOTEL_ID_REGEX);
-            Hotel result = this.hotelList.getHotelById(targetId);
-            String msg;
-            if (result != null) {
-                msg = "Found! \n".concat(result.toString());
-            } else {
-                msg = "No Hotel Found!";
-            }
-            Menu.printNotification(msg);
-            choise = Inputter.getYesNo("Do you want to continue (Yes/No)", "This is required");
-        } while (choise != 0);
-    }
-
-    public void displayAllHotel() {
-        this.view.printAllHotelByNameDESC(hotelList);
+            choice = Inputter.getYesNo("Do you want to continue (Yes/No)", "This is required");
+        } while (choice != 0);
     }
 
     public void deleteHotel() {
@@ -124,7 +127,7 @@ public class Controller {
                     this.hotelList.remove(result);
                     Menu.printNotification(msg);
 
-                    this.hotelList.saveToFile(); //SAVE xuống file
+                    this.hotelList.saveToFile(); // SAVE xuống file
                     Menu.printNotification("Save to File Success");
                 } else {
                     msg = "Canceled Delete";
@@ -136,12 +139,32 @@ public class Controller {
             }
         } catch (Exception e) {
             Menu.printNotification("Save to File Failed");
-            //e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 
+    public void checkHotelExisted() {
+        int choice;
+        do {
+            String targetId = Inputter.getString("Input hotelId", "That field is required", HotelListView.HOTEL_ID_REGEX);
+            Hotel result = this.hotelList.getHotelById(targetId);
+            String msg;
+            if (result != null) {
+                msg = "Found! \n".concat(result.toString());
+            } else {
+                msg = "No Hotel Found!";
+            }
+            Menu.printNotification(msg);
+            choice = Inputter.getYesNo("Do you want to continue (Yes/No)", "This is required");
+        } while (choice != 0);
+    }
+
+    public void displayAllHotel() {
+        this.view.printAllHotelByNameDESC(hotelList);
+    }
+
     /*
-        có thể chuyển mảng url để add đc nhiều file khác
+     * có thể chuyển mảng url để add đc nhiều file khác
      */
     public boolean connectDB(String urlDatabase) {
         try {
