@@ -17,7 +17,8 @@ public class Controller {
     private HotelList hotelList;
 
     // ====================CONSTRUCTOR====================
-    public Controller() {}
+    public Controller() {
+    }
 
     public Controller(HotelListView view, HotelList hotelList) {
         this.view = view;
@@ -55,7 +56,7 @@ public class Controller {
             int choice;
             do {
                 // nhập hotelId cần update //VIEW đưa CONTROLLER data
-                String targetId = Inputter.getString("Input hotelId", "That field is required", HotelListView.HOTEL_ID_REGEX);
+                String targetId = Inputter.getString("Input hotelId", HotelListView.HOTEL_ID_MSG, HotelListView.HOTEL_ID_REGEX);
                 // CONTROLLER xuống MODEL kiểm tra
                 Hotel result = this.hotelList.getHotelById(targetId);
 
@@ -64,14 +65,15 @@ public class Controller {
                     String msg = "Found! \n".concat(result.toString());
                     Menu.printNotification(msg);
                     Hotel newHotel = this.view.getUpdateHotelInformation(result);
-                    this.hotelList.remove(result);
-                    this.hotelList.add(newHotel);
-                    Menu.printNotification("Update Success");
+                    // CONTROLLER đập xuống MODEL
+                    this.hotelList.remove(result); //xóa cũ
+                    this.hotelList.add(newHotel);  //add mới
 
+                    Menu.printNotification("Update Success");
                     this.hotelList.saveToFile(); // SAVE xuống file
                     Menu.printNotification("Save to File Success");
+                    // 2. nếu không tìm thấy
                 } else {
-                    // 2.
                     Menu.printNotification("No Hotel Found!");
                 }
                 choice = Inputter.getYesNo("Do you want to continue (Yes/No)", "This is required");
@@ -86,17 +88,17 @@ public class Controller {
     public void searchHotel() {
         int choice;
         do {
-            String inputtedString = this.view.getSearchHotelInformation(); // VIEW đưa CONTROLLER
-                                                                           // data
+            // VIEW đưa CONTROLLER
+            String inputtedString = this.view.getSearchHotelInformation();
 
             ArrayList<Hotel> result = new ArrayList<>();
             if (inputtedString.matches(HotelListView.HOTEL_ID_REGEX)) {
-                Hotel tmp = hotelList.getHotelById(inputtedString); // hotel tạm check null
+                Hotel tmp = hotelList.getHotelById(inputtedString); // hotel tạm check null //MODEL trả lại CONTROLLER
                 if (tmp != null) {
                     result.add(tmp);
                 }
             } else {
-                result = hotelList.getHotelByName(inputtedString);
+                result = hotelList.getHotelByName(inputtedString); //MODEL trả lại CONTROLLER
             }
 
             String msg;
@@ -115,7 +117,7 @@ public class Controller {
 
     public void deleteHotel() {
         try {
-            String targetId = Inputter.getString("Input hotelId", "That field is required", HotelListView.HOTEL_ID_REGEX);
+            String targetId = Inputter.getString("Input hotelId", HotelListView.HOTEL_ID_MSG, HotelListView.HOTEL_ID_REGEX);
             Hotel result = this.hotelList.getHotelById(targetId);
             String msg;
             if (result != null) {
@@ -146,7 +148,7 @@ public class Controller {
     public void checkHotelExisted() {
         int choice;
         do {
-            String targetId = Inputter.getString("Input hotelId", "That field is required", HotelListView.HOTEL_ID_REGEX);
+            String targetId = Inputter.getString("Input hotelId", HotelListView.HOTEL_ID_MSG, HotelListView.HOTEL_ID_REGEX);
             Hotel result = this.hotelList.getHotelById(targetId);
             String msg;
             if (result != null) {

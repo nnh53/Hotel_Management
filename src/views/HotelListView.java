@@ -16,6 +16,7 @@ public class HotelListView {
     // ====================PROP====================
     public static final String PHONE_REGEX = "^0[3-9][0-9]{8}$"; // hằng số
     public static final String HOTEL_ID_REGEX = "^H\\d{2}$"; // hằng số
+    public static final String HOTEL_ID_MSG = "That Field is Required and must be HXX Format";
 
     // ====================CONSTRUCTOR====================
     public HotelListView() {
@@ -163,7 +164,7 @@ public class HotelListView {
      *
      * @param hotelList
      */
-    public void printAll(HotelList hotelList) {
+    public void printAllHotel(HotelList hotelList) {
         if (hotelList == null || hotelList.isEmpty()) {
             Menu.printNotification("Had nothing to print");
             return;
@@ -193,6 +194,6 @@ public class HotelListView {
             }
         });
         // 2. Print
-        this.printAll(hotelList);
+        this.printAllHotel(hotelList);
     }
 }

@@ -13,11 +13,10 @@ public abstract class RuntimeMenu extends Menu {
     }
 
     // ====================METHOD====================
-
     /**
      * hàm handle sự kiện của từng Option trong Menu. hàm trả về boolean quyết định có tiếp tục Menu
      * hay không
-     * 
+     *
      * @param choice
      * @param controller
      * @return boolean quyết định có tiếp tục Menu hay không
@@ -27,16 +26,16 @@ public abstract class RuntimeMenu extends Menu {
     /**
      * hàm trigger-tạo một môi trường vòng lặp để chạy Menu. nhận vào controller để controller xử lý
      * sự kiện
-     * 
+     *
      * @param controller
      */
     public void trigger(Controller controller) {
-        boolean continues;
+        boolean isContinues;
         do {
             this.printAllOption();
             int userChoice = this.getChoice();
-            continues = eventHandler(userChoice, controller);
-        } while (continues);
+            isContinues = eventHandler(userChoice, controller);
+        } while (isContinues);
     }
 
 }

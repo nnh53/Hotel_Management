@@ -48,7 +48,6 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseManagement {
                 writer.write(item.toString().trim());
                 writer.write("\n");
             }
-            writer.flush();
             writer.close(); // (để dọn rác)
             return true;
         } catch (Exception e) {
@@ -78,6 +77,7 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseManagement {
                 String hotelAddress = st.nextToken().trim();
                 String hotelPhone = st.nextToken().trim();
                 int hotelRating = Integer.parseInt(st.nextToken().substring(0, 1));
+
                 // tạo
                 Hotel newHotel = new Hotel(hotelId, hotelName, numRoomsAvailable, hotelAddress, hotelPhone, hotelRating);
                 this.add(newHotel);
@@ -85,8 +85,6 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseManagement {
             }
 
             reader.close(); // (để dọn rác)
-            reader = null;
-            f = null;
             return true;
 
         } catch (Exception e) {
@@ -116,7 +114,7 @@ public class HotelList extends ArrayList<Hotel> implements IDatabaseManagement {
     public boolean isExistedByAddress(String targetAddress) {
         boolean isExisted = false;
         for (Hotel item : this) { // item là 1 hotel trong list
-            if (item.getHotelAddress().equals(targetAddress)) {
+            if (item.getHotelAddress().toLowerCase().equals(targetAddress.toLowerCase())) { //lower case hết so sánh
                 isExisted = true;
                 break;
             }
