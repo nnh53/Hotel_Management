@@ -8,7 +8,7 @@ import utils.Inputter;
 
 /**
  * package chứa các method IN dữ liệu từ hotelList hoặc trả về controller
- * 
+ *
  * @author hoangnn
  */
 public class HotelListView {
@@ -18,12 +18,13 @@ public class HotelListView {
     public static final String HOTEL_ID_REGEX = "^H\\d{2}$"; // hằng số
 
     // ====================CONSTRUCTOR====================
-    public HotelListView() {}
+    public HotelListView() {
+    }
 
     // ====================METHOD====================
     /**
      * hàm trả về Hotel người dùng nhập, nhận vào hotelList từ model để check trùng
-     * 
+     *
      * @param hotelList
      * @return Hotel
      */
@@ -40,26 +41,24 @@ public class HotelListView {
         // name
         String inputtedName = Inputter.getString("Input Hotel Name: ", "That Field is Required", false);
         // num of room
-        int inputtedNumRoomsAvailable =
-                Inputter.getInteger("Input Number of Rooms Available: ", "That Field is Required and cannot be Negative", 0, 1000);
+        int inputtedNumRoomsAvailable = Inputter.getInteger("Input Number of Rooms Available: ", "That Field is Required and cannot be Negative", 0, 1000);
         // address
         String inputtedAddress;
         do {
             inputtedAddress = getNewAddressInformation();
         } while (hotelList.isExistedByAddress(inputtedAddress));
         // phone number
-        String inputtedPhone =
-                Inputter.getString("Input Hotel Phone: ", "That Field is Required and must be 10 character Vietnam PhoneNumber", PHONE_REGEX);
+        String inputtedPhone = Inputter.getString("Input Hotel Phone: ", "That Field is Required and must be 10 character Vietnam PhoneNumber", PHONE_REGEX);
         // rating
-        int inputtedRating = Inputter.getInteger("Input Hotel Rating: ", "That Field is Required and must be bettween 1 to 6", 1, 6);
+        int inputtedRating = Inputter.getInteger("Input Hotel Rating: ", "That Field is Required and must be between 1 to 6", 1, 6);
         // 2. tạo hotel
         Hotel inputtedHotel = new Hotel(inputtedId, inputtedName, inputtedNumRoomsAvailable, inputtedAddress, inputtedPhone, inputtedRating);
         return inputtedHotel;
     }
 
     /**
-     * hàm trả về Hotel người dùng update, nhận vào hotel muốn update
-     * 
+     * hàm trả về Hotel người dùng ĐÃ update, nhận vào hotel muốn update
+     *
      * @param hotel
      * @return Hotel
      */
@@ -88,8 +87,7 @@ public class HotelListView {
             choice = menuSearch.getChoice();
             switch (choice) {
                 case 1: {
-                    numRoomsAvailable =
-                            Inputter.getInteger("Input Number of Rooms Available: ", "That Field is Required and cannot be Negative", 0, 1000);
+                    numRoomsAvailable = Inputter.getInteger("Input Number of Rooms Available: ", "That Field is Required and cannot be Negative", 0, 1000);
                     break;
                 }
                 case 2: {
@@ -97,16 +95,16 @@ public class HotelListView {
                     break;
                 }
                 case 3: {
-                    hotelPhone = Inputter.getString("Input Hotel Phone: ", "That Field is Required and must be 10 character Vietnam PhoneNumber",
-                            PHONE_REGEX);
+                    hotelPhone = Inputter.getString("Input Hotel Phone: ", "That Field is Required and must be 10 character Vietnam PhoneNumber", PHONE_REGEX);
                     break;
                 }
                 case 4: {
-                    hotelRating = Inputter.getInteger("Input Hotel Rating: ", "That Field is Required and must be bettween 1 to 6", 1, 6);
+                    hotelRating = Inputter.getInteger("Input Hotel Rating: ", "That Field is Required and must be between 1 to 6", 1, 6);
                     break;
                 }
                 case 5: {
-                    Hotel inputtedHotel = new Hotel(hotelId, hotelName, numRoomsAvailable, hotelAddress, hotelPhone, hotelRating);
+                    Hotel inputtedHotel = new Hotel(hotelId, hotelName, numRoomsAvailable,
+                            hotelAddress, hotelPhone, hotelRating);
                     System.out.println(inputtedHotel.toString());
                     break;
                 }
@@ -121,7 +119,7 @@ public class HotelListView {
 
     /**
      * hàm người dùng nhập thông tin address chi tiết
-     * 
+     *
      * @return String
      */
     private String getNewAddressInformation() {
@@ -136,20 +134,20 @@ public class HotelListView {
 
     /**
      * hàm trả về hotelId hoặc hotelName muốn search
-     * 
+     *
      * @return String format hotelId hoặc hotelName
      */
-    public String getSearchHotelInfomation() {
+    public String getSearchHotelInformation() {
         Menu menuSearch = new Menu("Search Hotel Menu");
         menuSearch.addNewOption("Search by hotelId");
         menuSearch.addNewOption("Search by hotelName");
-        int choise;
+        int choice;
         while (true) {
             menuSearch.printAllOption();
-            choise = menuSearch.getChoice();
-            switch (choise) {
+            choice = menuSearch.getChoice();
+            switch (choice) {
                 case 1: {
-                    String targetId = Inputter.getString("Input hotelId", "That field is required", HOTEL_ID_REGEX);
+                    String targetId = Inputter.getString("Input hotelId", "That Field is Required and must be HXX Format", HOTEL_ID_REGEX);
                     return targetId;
                 }
                 case 2: {
@@ -162,7 +160,7 @@ public class HotelListView {
 
     /**
      * print tất cả phần tử trong list, nhận vào list muốn print
-     * 
+     *
      * @param hotelList
      */
     public void printAll(HotelList hotelList) {
@@ -177,19 +175,24 @@ public class HotelListView {
         Menu.printNotification(msg, "Hotel List");
     }
 
+    /**
+     * print tất cả phần tử trong list theo chiều DESC, nhận vào list muốn print
+     *
+     * @param hotelList
+     */
     public void printAllHotelByNameDESC(HotelList hotelList) {
         if (hotelList == null || hotelList.isEmpty()) {
             Menu.printNotification("Had nothing to print");
             return;
         }
-        // SORT DESC name
+        // 1. SORT DESC name
         Collections.sort(hotelList, new Comparator<Hotel>() {
             @Override
             public int compare(Hotel o1, Hotel o2) {
                 return o2.getHotelName().compareTo(o1.getHotelName()); // reserver o2 o1
             }
         });
-        // print
+        // 2. Print
         this.printAll(hotelList);
     }
 }

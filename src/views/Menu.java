@@ -3,6 +3,11 @@ package views;
 import java.util.ArrayList;
 import utils.Inputter;
 
+/**
+ * lớp tạo ra một Menu và các method liên quan đến Menu
+ *
+ * @author hoangnn
+ */
 public class Menu {
 
     // ====================PROP====================
@@ -31,7 +36,7 @@ public class Menu {
     }
 
     public int getChoice() {
-        int choice = Inputter.getInteger("Input Your Choise", "Your choise must between 1 and " + optionList.size(), 1, optionList.size());
+        int choice = Inputter.getInteger("Input Your Choice", "Your choice must between 1 and " + optionList.size(), 1, optionList.size());
         return choice;
     }
 

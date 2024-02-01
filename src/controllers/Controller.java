@@ -86,8 +86,8 @@ public class Controller {
     public void searchHotel() {
         int choice;
         do {
-            String inputtedString = this.view.getSearchHotelInfomation(); // VIEW đưa CONTROLLER
-                                                                          // data
+            String inputtedString = this.view.getSearchHotelInformation(); // VIEW đưa CONTROLLER
+                                                                           // data
 
             ArrayList<Hotel> result = new ArrayList<>();
             if (inputtedString.matches(HotelListView.HOTEL_ID_REGEX)) {

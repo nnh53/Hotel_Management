@@ -1,13 +1,15 @@
 package runtime;
 
 import controllers.Controller;
-import views.AbstractMenu;
+import views.RuntimeMenu;
 import views.HotelListView;
 
 /**
+ * Menu người dùng tương tác
+ * 
  * @author hoangnn
  */
-public class HotelManagementMenu extends AbstractMenu {
+public class HotelManagementMenu extends RuntimeMenu {
 
     public HotelManagementMenu() {
         super("Hotel Management Menu");
@@ -21,8 +23,8 @@ public class HotelManagementMenu extends AbstractMenu {
     }
 
     @Override
-    public boolean eventHandler(int choice, Controller controller) {
-        switch (choice) {
+    public boolean eventHandler(int option, Controller controller) {
+        switch (option) {
             case 1: {
                 controller.addHotel();
                 return true;
@@ -58,7 +60,8 @@ public class HotelManagementMenu extends AbstractMenu {
     }
 
     public static void main(String[] args) {
-        final String urlDatabase = "F:\\FPT\\Ki 3\\LAB211\\Hotel_Management-hoangnnSE183190\\database\\Hotel.dat";
+        final String urlDatabase =
+                "F:\\FPT\\Ki 3\\LAB211\\Hotel_Management-hoangnnSE183190\\database\\Hotel.dat";
         // =========INITIALIZE=========
         // view
         HotelListView hotelListView = new HotelListView();
